@@ -4,10 +4,13 @@
 Pre-requisite PI Keys : Tavily ,Pinecone, Groq
 
 Tavily : https://app.tavily.com/home
+
 Groq : https://console.groq.com/keys
+
 Pinecone : https://app.pinecone.io/organizations/-NvankU832R3Eg6IXOo3/projects/feff407b-ff5a-472a-a02a-d576882ed484/keys
 
-to manage python package : uv
+to manage python package : 
+uv
 uv init
 uv venv
 source .venv/Scripts/activate
