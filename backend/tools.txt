@@ -1,0 +1,55 @@
+Tools information :
+--------------------------------------------------------------------------------
+
+1. RAG SEARCH TOOL
+--------------------------------------------------------------------------------
+PURPOSE:
+Retrieves semantically relevant document chunks from the internal Pinecone vector knowledge base. This tool is called by the `rag_lookup` node.
+
+INPUTS:
+- `query` (str): The search query string (user's question) provided by the agent.
+
+CORE LOGIC / ACTIONS:
+1. Receives a `query` string.
+2. Obtains an initialized `PineconeVectorStore` retriever instance.
+3. Invokes the retriever with the `query`, configured to return the top-K (e.g., 5) most relevant document chunks.
+4. Joins the `page_content` of the retrieved document chunks into a single string.
+5. Includes error handling for retrieval failures.
+
+OUTPUTS / RETURNS:
+- `str`: A string containing the concatenated text content of the most relevant document chunks.
+- `str`: An empty string `""` if no relevant chunks are found.
+- `str`: "RAG_ERROR::[error message]" if an exception occurs during retrieval.
+
+EXTERNAL DEPENDENCIES:
+- `PineconeVectorStore` (from `langchain_pinecone`)
+- `HuggingFaceEmbeddings` (used by `PineconeVectorStore` for embedding queries)
+- `PINECCONE_API_KEY` (environment variable)
+--------------------------------------------------------------------------------
+
+
+2. WEB SEARCH TOOL
+--------------------------------------------------------------------------------
+PURPOSE:
+Provides real-time, up-to-date information by performing a web search using the Tavily API. This tool is called by the `web_node`.
+
+INPUTS:
+- `query` (str): The search query string provided by the agent.
+
+CORE LOGIC / ACTIONS:
+1. Receives a `query` string.
+2. Invokes the `TavilySearch` API with the given `query`.
+3. Parses the API response:
+   - Extracts `title`, `content`, and `url` from the top search results.
+   - Formats these into a readable string.
+4. Includes error handling for API failures or unexpected responses.
+
+OUTPUTS / RETURNS:
+- `str`: A formatted string containing the titles, content snippets, and URLs of the top web search results.
+- `str`: "No results found" if Tavily returns no relevant data.
+- `str`: "WEB_ERROR::[error message]" if an exception occurs during the search.
+
+EXTERNAL DEPENDENCIES:
+- `TavilySearch` (from `langchain_tavily`)
+- `TAVILY_API_KEY` (environment variable)
+--------------------------------------------------------------------------------
