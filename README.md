@@ -46,8 +46,13 @@ You can also check it on postman
 ------------------------------------------------------------------------------------
 
 After this works, move to backend programming :
+
 create backend directory :
+
 mkdir backend/
+
 create .env (to store API KEYS)
+
 then create config.py  , vectostore.py , agent.py (build the agentic workflow here)
+
 finally go to main.py 
