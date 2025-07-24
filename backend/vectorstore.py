@@ -1,7 +1,8 @@
 import os
 from pinecone import Pinecone,ServerlessSpec
 from langchain_pinecone import PineconeVectorStore
-from langchain_huggingface import HuggingFaceEmbeddings
+# from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_openai import OpenAIEmbeddings
 
 # for text splitter
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -10,14 +11,17 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from config import PINECONE_API_KEY
 os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
 
+# Pinecone index set up : https://app.pinecone.io/organizations/-NvankU832R3Eg6IXOo3/projects/feff407b-ff5a-472a-a02a-d576882ed484/indexes/rag-test001/browser
 # Initialize Pinecone Client
 pc = Pinecone(api_key=PINECONE_API_KEY)
+#index = pc.Index("rag-test-001")
 
 # define embedding model
-embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+#embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
 
 # define Pinecone index
-INDEX_NAME = "rag-index"
+INDEX_NAME = "rag-test002"
 
 # retriever function 
 def get_retriever():
@@ -28,7 +32,7 @@ def get_retriever():
     if INDEX_NAME not in pc.list_indexes().names():
         print("Creating Index...")
         pc.create_index(INDEX_NAME, 
-                        dimension=384, 
+                        dimension=1024, 
                         metric="cosine",
                         spec = ServerlessSpec(cloud ="aws", region="us-east-1"))
         print("Created Pinecone Index...........")

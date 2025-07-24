@@ -47,4 +47,34 @@ create backend directory :
 mkdir backend/
 create .env (to store API KEYS)
 then create config.py  , vectostore.py , agent.py (build the agentic workflow here)
-finally go to main.py 
+finally go to main.py - in backend directory (for FAST API endpoint building)
+
+
+------------------------------------------------------------------------------------
+
+Postman :
+
+Health Endpoint Check : healthCheck 
+
+Add New Request : GET : http://127.0.0.1:8000/chat/
+
+Check for {'Status' : '200 OK'}
+
+
+Chat Endpoint Check: ChatRoute
+
+Add New Request : POST  : http://127.0.0.1:8000/chat/
+
+{
+    "session_id": "test-session-001",
+    "query" : "What do you know about Wells Fargo?",
+    "enable_we_search" :true
+}
+
+Upload Document Endpoint : 
+
+Add New Request : POST  : http://127.0.0.1:8000/upload-document/
+
+(Select Body --> form-date --> key : file , Value : pdf document )
+
+** Make sure the Index name is correctly defined in the vectostore.py. Also check the dimension size. **
